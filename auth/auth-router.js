@@ -29,7 +29,8 @@ router.post('/login', (req, res) => {
   Users.findBy({ username })
     .then(dad => {
       if (dad && bcrypt.compareSync(password, dad.password)) {
-        res.status(200).json({ message: `Welcome ${dad.username}, feel free to joke about the cabin!` })
+        const token = createToken(dad);
+        res.status(200).json({ message: `Welcome ${dad.username}, feel free to joke about the cabin!`, token })
       } else {
         res.status(401).json({ message: 'Please provide valid credentials' })
       }
@@ -40,5 +41,17 @@ router.post('/login', (req, res) => {
     })
 
 });
+
+function createToken(user) {
+  const payload = {
+    userId: user.id,
+    username: user.username
+  }
+  const options = {
+    expiresIn: '2h'
+  }
+  return jwt.sign(payload, secrets.jwtSecret, options);
+} 
+
 
 module.exports = router;

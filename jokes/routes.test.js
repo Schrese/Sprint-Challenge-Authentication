@@ -67,5 +67,50 @@ describe('auth router endpoints', function() {
 
         })
     })
+    
+    describe('get jokes', function() {
+        test('should return 200 status', function() {
+            
+            return request(server)
+            .post('/api/auth/register').send({username: 'maybe', password: 'this works'})
 
+            .then(res => {
+                return request(server)
+                .post('/api/auth/login').send({username: 'maybe', password: 'this works'})
+                
+                .then(res => {
+                    const token = res.body.token
+
+                    return request(server).get('/api/jokes')
+                        .set("Authorization", token)
+                    .then(res => {
+                        expect(res.status).toBe(200)
+                    })
+                        
+                        })
+                })
+            })
+
+      
+
+        
+    })
+
+    //Below is my original thought process
+    // describe('getting jokes', function() {
+    //     it('returns jokes', async function() {
+    //         const newUser = {username: 'loggingIn', password: 'uhhhhhhh'}
+    //         await db('users').truncate();
+    //         await db('users').insert(newUser);
+
+    //         const user = await request(server)
+    //             .post('/api/auth/login').send({username: 'loggingIn', password: 'uhhhhhhh'})
+
+    //         const res = await request(server)
+    //             .get('/api/jokes')
+    //             .set('authorization', user.token)
+            
+    //         await expect(res.status).toBe(200);
+    //     })
+    // })
 })

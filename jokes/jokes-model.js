@@ -6,13 +6,13 @@ module.exports = {
 }
 
 function add(user) {
-    return db('user').insert(user, 'id')
+    return db('users').insert(user, 'id')
     .then(ids => {
         const [id] = ids;
-        return findById(id);
+        return findById(id).first();
     })
 }
 
 function findById(id) {
-    return db('user').select('id', 'username').where({ id })
+    return db('users').select('id', 'username').where({ id });
 }

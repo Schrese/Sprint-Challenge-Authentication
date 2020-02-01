@@ -40,11 +40,21 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 - [ ] What is the purpose of using _sessions_?
 
+    It persists information stored about the user by making use of cookies, which make use of Headers (which actually stores the information about the requests being made). This means that the user does not need to provide credentials every time they come back to the page (thus creating a better user experience). Honestly, this is another one of those questions that feels like a rabbit hole of definitions that lead to more definitions that all combine to form the original definition etc. 
+
 - [ ] What does bcrypt do to help us store passwords in a secure manner.
+
+    It allows us to hash passwords before saving them to the database in a secure way, but without us needing to write our own key derivation functions (which we really shouldn't be doing anyways.
 
 - [ ] What does bcrypt do to slow down attackers?
 
+    Bcrypt hashes the password however many times we designate. So an attacker would need the hash, the algorithm we used, and how many rounds we have set the password to hash. This makes it more difficult for hackers to gain access to all three. It also hashes the password before it even reaches the database, which means that the password is never stored as plain text. 
+
 - [ ] What are the three parts of the JSON Web Token?
+
+    Header: an object containing 2 claims, each being a key
+	Payload: Where we put our data
+	Signature: Where we put our secret so that if tampered with, the request will no longer be valid
 
 ## Minimum Viable Product
 
